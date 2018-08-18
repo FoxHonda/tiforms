@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+  {% load static %}
+  {% load i18n %}
+
+{% block content %}
+
+
+
+  <!-- section -->
+  <div class="section">
+    <!-- container -->
+    <div class="container">
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-3">
+          &nbsp;
+        </div>
+        <div class="col-md-6">
+          <!-- post share -->
+          <div class="section-row">       
+
+            <ul class="post-meta">
+              <li>{{ post.post_date }}</li>
+            </ul>
+
+            <div class="post-share">
+              <a href="{% url 'post-update' pk=post.id %}" class="social-pinterest"><i class="fa fa-edit"></i><span>Edit</span></a>
+            </div>
+          </div>
+
+          <div class="section-row">
+            <div class="galery-widget">
+              <ul>
+                {% for img in post.postimages_set.all %}
+
+                  <li><img class="common_height" src="{{ img.image.url }}"></li>
+
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          <div class="section-row common_min_height">
+            <p>{{ post.text|linebreaks }}</p>
+          </div>
+      </div>
+      <div class="col-md-3">
+        &nbsp;
+       </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

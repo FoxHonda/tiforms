@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <p>Статистика сайта:</p>
+  <ul>
+    <li><strong>Постов:</strong> {{ num_posts }}</li>
+    <li><strong>Картинок:</strong> {{ num_images }}</li>
+  </ul>
+
+{% endblock %}

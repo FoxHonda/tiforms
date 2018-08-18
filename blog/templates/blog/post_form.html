@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include "blog/blocks/start_block.html" %}
+
+<a class="post-img" href="{{ post.get_absolute_url }}">ссылка на пост</a>
+
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+
+  <br>
+  {{ post_form.management_form }}
+<!--     <img src="/media/{{ pform.image.value }}" class="common_tumb_height">
+    <input type="checkbox" name="postimages_set-{{ forloop.counter0 }}-clear" id="id_postimages_set-{{ forloop.counter0 }}-clear">
+    <input type="file" name="postimages_set-{{ forloop.counter0 }}-image" id="id_postimages_set-{{ forloop.counter0 }}-image">
+    <input type="number" name="postimages_set-{{ forloop.counter0 }}-order" value="{{ forloop.counter0 }}" id="id_postimages_set-{{ forloop.counter0 }}-order">
+    <input type="checkbox" name="postimages_set-{{ forloop.counter0 }}-DELETE" id="id_postimages_set-{{ forloop.counter0 }}-DELETE">
+    <input type="hidden" name="postimages_set-{{ forloop.counter0 }}-post" value="{{ pform.post.id }}" id="id_postimages_set-{{ forloop.counter0 }}-post">
+    {{ pform.id }} -->
+    {% if post_form.errors %}
+    {{ post_form.errors }}
+    {% endif %}
+{% for pform in post_form %}    
+   <div class="formset_row {{ post_form.prefix }}">
+
+    {{ pform }}
+  </div>
+{% endfor %}
+
+
+
+<hr>      <div class="col-md-12">
+        <div class="form-group common_center">
+          <button class="primary-button">Save</button>
+        </div>
+      </div>  
+<hr>  
+
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <textarea class="input min_height_textarea" name="text" cols="40" rows="10" maxlength="4000" required id="id_text">{{ form.text.value }}</textarea>
+      <span class="text-success" id="result">0</span>/400
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="form-group">
+      <span class="for_tags">{{ form.tags }}</span>
+    </div>
+  </div>
+
+
+
+    </form>
+
+    {% block js %} 
+
+
+    {% endblock %}55
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="{% static 'formset/jquery.formset.js' %}"></script>
+    <script>
+      $(document).ready(function() {
+        $('#result').html($('#id_text').val().length);
+
+      }); 
+      $('#id_text').bind('input', function(){
+        $('#result').html($(this).val().length);
+      });
+    </script>
+    <script type="text/javascript">
+      $('.formset_row').formset({
+        addText: 'add image',
+        deleteText: 'remove image',
+        prefix: '{{ post_form.prefix }}',
+        keepFieldValues: ''
+      });
+    </script>
+
+    {% include "blog/blocks/end_block.html" %}
+    {% endblock %}
